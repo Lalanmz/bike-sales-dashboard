@@ -1,5 +1,3 @@
-﻿
-
 CREATE TABLE categoryy (
     category_id NUMBER PRIMARY KEY,
     category_name VARCHAR2(100) NOT NULL
@@ -237,6 +235,7 @@ FROM (
     GROUP BY c.customer_id, c.first_name, c.last_name, c.email
 ) 
 WHERE rn BETWEEN 2 AND 6; 
+
 
 
 
