@@ -1,142 +1,61 @@
 # 🚴‍♂️ Bike Sales Dashboard – Power BI Project
-This project focuses on analyzing bike sales performance, delivery efficiency, and staff/store productivity using a fully integrated data analytics pipeline. The analysis aims to uncover actionable insights into customer demand, fulfillment delays, inventory management, and employee performance. The project leverages Oracle SQL for data extraction and transformation, Python for exploratory data analysis and validation, and Power BI for interactive visual dashboards powered by DAX and Power Query transformations.
+This project focuses on analyzing bike sales performance, delivery efficiency, and staff productivity within a multi-store retail network. The main objective is to uncover the key performance drivers affecting sales, fulfillment, and employee output, and to recommend actionable strategies for improvement.
+The analysis integrates Oracle SQL for structured data extraction and transformation, Python for exploratory data analysis and validation, and Power BI for dashboard creation using DAX-based KPIs.
+By combining advanced data modeling, analytical processing, and interactive visualization, the project delivers a holistic business intelligence solution that empowers decision-makers to monitor operations, track performance, and enhance overall efficiency.
 
-Through a comprehensive data model, the solution provides a clear view of sales trends, delivery timelines, stock availability, and staff efficiency, supporting management decisions across multiple operational areas.
+# Data Pipeline & Tools
 
-Data Pipeline & Tools
-Data Source & Modeling
+The data pipeline was designed to ensure accuracy, scalability, and transparency across all analytical layers.
 
-Database: Oracle SQL
+Data Source and Storage:
+Raw transactional data was stored in Oracle SQL, covering entities such as Customers, Orders, Order_Items, Products, Stocks, Staffs, Stores, Brands, and Categories. The data model followed a star schema structure, with Orders and Order_Items serving as fact tables connected to related dimensions.
 
-Datasets: Customers, Orders, Order Items, Products, Stocks, Staffs, Stores, Brands, and Categories.
+Data Cleaning and Transformation:
+In SQL, duplicate and null values were removed, and CTEs (Common Table Expressions) were created for pre-aggregations like total sales by store and late orders by month.
+In Power Query, column names were standardized, data types were adjusted, and conditional columns were created for order status and delivery performance. This ensured data integrity and smooth model loading into Power BI.
 
-Data was cleaned, transformed, and normalized using SQL joins and CTEs before loading into Power BI.
+Exploratory Data Analysis (Python):
+Python was used to perform consistency checks between SQL and Power BI results, calculate summary statistics, and validate key KPIs such as total sales, on-time delivery rates, and average fulfillment days.
 
-Data Preparation
+Power BI Modeling:
+Relationships between tables were established using unique keys. Additional calculated columns (e.g., Fulfillment Days, On-Time Flag, Delivery Status) and DAX measures were implemented to create advanced business metrics and performance ratios.
 
-Oracle SQL used for:
+# Key DAX Measures & Ratios
 
-Cleaning duplicates, correcting nulls, and ensuring referential integrity.
+The project included several essential DAX measures to quantify sales and operational performance. Among them were total sales, average sales per staff, on-time delivery rate, total late and pending orders, and average fulfillment time.
+Each measure provided a clear and actionable insight into business operations — for example, the On-Time Rate (%) quantified delivery punctuality, while the Average Sales per Staff metric highlighted workforce efficiency.
+These measures collectively enabled dynamic segmentation of performance across stores, categories, and individual staff members.
 
-Creating views for key performance areas (e.g., Sales by Store, Delivery Delays, and Staff KPIs).
+# Insights & Findings
 
-Power Query in Power BI used for:
+The analysis revealed several critical patterns and operational insights:
 
-Data type alignment and column derivations (e.g., Order Status, Fulfillment Days, Delay Classification).
+Delivery Performance:
+Delivery efficiency was a major concern, with only about 30% of orders delivered on time. A total of 1,351 orders were classified as late, and 508 orders remained pending. The average fulfillment time was approximately 2 days, with late deliveries strongly correlated with increased store workload and stock shortages.
 
-Merging multiple related tables into a star schema data model.
+Staff and Store Performance:
+Staff productivity analysis identified Marcelene Boyer as the top-performing employee, achieving the highest delivery success rate. Among stores, Baldwin Bikes led with 5.22 million in total sales, followed by Santa Cruz Bikes with 1.61 million and Rowlett Bikes with 0.87 million.
 
-Exploratory Analysis (Python)
+Sales and Product Trends:
+Sales were dominated by Mountain Bikes and Road Bikes, together contributing the largest share of total revenue. Stores with better stock management and balanced workloads achieved consistently higher on-time delivery rates and customer satisfaction levels.
 
-Python was used for initial exploratory analysis:
+Operational Challenges:
+Stock shortages and delayed fulfillment cycles were key drivers of performance issues. Seasonal trends also indicated peak sales months that required more efficient logistics and inventory planning.
 
-Verified data consistency across SQL and Power BI layers.
+# Dashboard Features
 
-Generated descriptive statistics on sales, delivery times, and product categories.
+The Power BI dashboard was designed to present insights clearly and interactively through five main pages:
 
-Validated DAX-based KPIs by comparing with Python-calculated aggregates.
+1. Customer Trends: Highlights customer purchase frequency, loyalty, and order value distribution.
+2. Sales Performance: Displays revenue trends, top-performing product categories, and overall profitability.
+3. Stock Management: Tracks inventory levels, out-of-stock products, and restock efficiency.
+4. Delivery and Order Fulfillment: Visualizes order timelines, late delivery ratios, and fulfillment patterns over time.
+5. Staff and Store Efficiency: Compares staff-level KPIs, on-time delivery performance, and sales contribution by store.
 
-Key Power BI Dashboards
-1. Customer Trends
+Each page includes dynamic filters by Store, Staff, Category, and Date, enabling users to drill down into specific operational dimensions. KPI cards summarize the most critical metrics — for instance, “On-Time Rate 30%” or “Baldwin Bikes: 5.22M Total Sales” — providing a clear performance snapshot at a glance.
 
-Analyzes customer order patterns and total purchase volume.
+# Conclusion
 
-Segments top buyers and loyal customers based on order frequency and total spend.
-
-2. Sales Performance
-
-Tracks overall revenue and profit by product, brand, and category.
-
-KPIs include Total Sales, Profit Margin %, Average Order Value, and Monthly Sales Trends.
-
-Visuals highlight best-selling and underperforming product categories.
-
-3. Stock Management
-
-Displays current inventory levels and product availability by store.
-
-KPIs include Total Stock Units, Out-of-Stock Alerts, and Category-Level Stock Ratios.
-
-Enables proactive restocking decisions and optimization of supply chain flow.
-
-4. Delivery and Order Fulfillment
-
-Focuses on order delivery performance metrics:
-
-Average Fulfillment Days
-
-On-Time Rate (%)
-
-Late and Pending Orders
-
-Time-series visualization of late orders by month.
-
-Segmented analysis of delivery performance by product category and month.
-
-5. Staff and Store Efficiency
-
-Evaluates employee and store-level sales productivity.
-
-KPIs:
-
-On-Time Rate (%)
-
-Average Sales per Staff
-
-Top Performer (Staff)
-
-Top Performing Store
-
-Visuals:
-
-Comparison of total sales and order count per store.
-
-Trendline for on-time rate improvements over months.
-
-Staff performance table with detailed metrics.
-
-Key DAX Measures & Ratios
-
-Total Sales = SUM ( 'Order_Items'[sales] )
-
-Average Sales per Staff = [Total Sales] / DISTINCTCOUNT ( Staff[staff_id] )
-
-On-Time Rate % = DIVIDE ( [On-Time Orders], [Total Orders] )
-
-Late Orders = COUNTROWS ( FILTER ( Orders, Orders[Status] = "Late" ) )
-
-Pending Orders = COUNTROWS ( FILTER ( Orders, Orders[Status] = "Pending" ) )
-
-Fulfillment Days = DATEDIFF ( Orders[Order Date], Orders[Delivery Date], DAY )
-
-Insights & Findings
-
-Delivery Delays: Late orders accounted for 1,351 cases, indicating logistics and fulfillment delays that need optimization.
-
-On-Time Performance: Overall on-time delivery rate stood at 30%, with opportunities for improvement in planning and inventory coordination.
-
-Staff Efficiency: Marcelene Boyer identified as the top-performing staff with the highest on-time rate and total orders fulfilled.
-
-Store Performance: Baldwin Bikes led with 5.22M total sales, followed by Santa Cruz Bikes (1.61M) and Rowlett Bikes (0.87M).
-
-Category Analysis: Mountain Bikes and Road Bikes showed the highest order volumes and revenue contributions.
-
-Inventory Control: Some product categories showed consistent stock shortages linked with late deliveries.
-
-Dashboard Features
-
-Fully interactive Power BI interface with page navigation and dynamic slicers.
-
-KPI cards with tooltips for quick insights (e.g., “30% of orders delivered on time”).
-
-Comparative visuals for store performance and staff efficiency.
-
-Integrated data storytelling through DAX-driven metrics.
-
-Conclusion
-
-This project demonstrates a complete end-to-end business intelligence solution — from database management in Oracle SQL, data validation and exploration in Python, to Power BI dashboarding enhanced with DAX analytics.
-
-
-
-
+The Bike Sales Analysis Project demonstrates a complete analytics lifecycle, from data extraction and preparation in Oracle SQL, through data validation and analysis in Python, to KPI visualization in Power BI.
+The integrated dashboard empowers management to monitor business performance in real time, identify inefficiencies, and design targeted interventions to improve delivery punctuality, sales productivity, and stock optimization.
+Ultimately, this solution transforms raw transactional data into a unified decision-support system, enabling evidence-based strategic planning and long-term operational improvement across the organization.
